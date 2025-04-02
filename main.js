@@ -64,11 +64,18 @@ class FlashcardModal extends obsidian_1.Modal {
     constructor(app, flashcards) {
         super(app);
         this.current = 0;
+        this.correctCount = 0;
+        this.incorrectCount = 0;
         this.flashcards = flashcards;
     }
     onOpen() {
         this.modalEl.classList.add("wide-modal");
         this.showCard();
+    }
+    updateStats() {
+        const total = this.correctCount + this.incorrectCount;
+        const pct = total > 0 ? Math.round((this.correctCount / total) * 100) : 0;
+        this.statsEl.setText(`✅ ${this.correctCount} ❌ ${this.incorrectCount}  (${pct}%)`);
     }
     showCard() {
         const { contentEl } = this;
@@ -80,6 +87,12 @@ class FlashcardModal extends obsidian_1.Modal {
             done.createEl("div", {
                 text: "¡Has terminado el repaso!",
                 cls: "done-message",
+            });
+            const total = this.correctCount + this.incorrectCount;
+            const pct = total > 0 ? Math.round((this.correctCount / total) * 100) : 0;
+            done.createEl("div", {
+                text: `Resultado final: ✅ ${this.correctCount} ❌ ${this.incorrectCount} (${pct}%)`,
+                cls: "stats",
             });
             setTimeout(() => this.close(), 3500);
             return;
@@ -97,6 +110,8 @@ class FlashcardModal extends obsidian_1.Modal {
             text: `Tarjeta ${this.current + 1} de ${this.flashcards.length}`,
             cls: "counter",
         });
+        this.statsEl = container.createDiv({ cls: "stats" });
+        this.updateStats(); // nueva función que vas a añadir ahora
         // Crear contenedor de la pregunta
         const question = container.createDiv({ cls: "question" });
         // Procesar pregunta y opciones si es tipo test
@@ -108,7 +123,7 @@ class FlashcardModal extends obsidian_1.Modal {
             else {
                 const matches = card.q.match(/[^A-D]*|[A-D]\..*?(?=\s[A-D]\.|$)/gs);
                 if (matches)
-                    lines = matches.map(line => line.trim());
+                    lines = matches.map((line) => line.trim());
             }
             // Si no se ha podido dividir correctamente, usar el formato plano
             if (!lines || lines.length < 2) {
@@ -129,7 +144,10 @@ class FlashcardModal extends obsidian_1.Modal {
             }
         }
         else {
-            question.textContent = card.q;
+            const questionText = document.createElement("div");
+            questionText.textContent = card.q;
+            questionText.classList.add("question-title");
+            question.appendChild(questionText);
         }
         // Crear contenedor de la respuesta, inicialmente oculta
         const answer = container.createEl("div", {
@@ -137,21 +155,35 @@ class FlashcardModal extends obsidian_1.Modal {
             cls: "answer",
         });
         answer.style.display = "none";
-        // Botón para mostrar la respuesta
-        const showBtn = container.createEl("button", {
-            text: "Mostrar respuesta",
-        });
+        // Crear botones
+        const showBtn = container.createEl("button", { text: "Mostrar respuesta" });
+        const nextBtn = container.createEl("button", { text: "Siguiente" });
+        const correctBtn = container.createEl("button", { text: "✅ Acierto" });
+        const incorrectBtn = container.createEl("button", { text: "❌ Fallo" });
+        const controls = container.createDiv({ cls: "controls" });
+        controls.append(showBtn, nextBtn, correctBtn, incorrectBtn);
+        showBtn.classList.add("show-answer");
+        nextBtn.classList.add("next");
+        correctBtn.classList.add("correct");
+        incorrectBtn.classList.add("incorrect");
         showBtn.onclick = () => {
             answer.style.display = "block";
             showBtn.style.display = "none";
         };
-        // Botón para pasar a la siguiente tarjeta
-        const nextBtn = container.createEl("button", {
-            text: "Siguiente",
-        });
         nextBtn.onclick = () => {
             this.current++;
+            this.updateStats();
             this.showCard();
+        };
+        correctBtn.onclick = () => {
+            this.correctCount++;
+            this.updateStats();
+            nextBtn.click();
+        };
+        incorrectBtn.onclick = () => {
+            this.incorrectCount++;
+            this.updateStats();
+            nextBtn.click();
         };
     }
 }

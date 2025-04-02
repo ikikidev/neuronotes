@@ -7,7 +7,10 @@
 ## ✨ Características
 
 - Crea flashcards en tus notas con una sintaxis sencilla.
-- Modal de repaso cómodo, con botones para mostrar respuesta y avanzar.
+- Modal de repaso cómodo y visualmente armónico (estilo CyberCute).
+- Botones para marcar ✅ acierto y ❌ fallo durante el repaso.
+- Contadores automáticos de progreso con porcentaje de aciertos.
+- Modal responsive y accesible para escritorio y móvil.
 - Compatible con cualquier archivo Markdown en tu Vault.
 - Ideal para repasar teoría técnica, vocabulario, definiciones clave, etc.
 
@@ -21,6 +24,19 @@ Dentro de cualquier nota, escribe tus tarjetas así:
 %%card
 Q: ¿Qué es una dirección IP?
 A: Es un identificador único para un dispositivo en una red.
+%%
+```
+
+También puedes crear flashcards tipo test (con opciones múltiples):
+
+```
+%%card
+Q: ¿Cuál es la capa de red en el modelo OSI?
+A. Aplicación
+B. Enlace de datos
+C. Red
+D. Sesión
+A: C. Red
 %%
 ```
 
@@ -61,9 +77,14 @@ Una vez instalado y activado el plugin:
 3. Cuando quieras repasar tus tarjetas:
    - Presiona `Ctrl + P` (o `Cmd + P` en macOS) para abrir la paleta de comandos.
    - Escribe y selecciona **Neuronotes: Revisar flashcards**.
-   - Se abrirá un modal donde podrás repasar las tarjetas con controles para mostrar respuestas y pasar a la siguiente.
+   - Se abrirá un modal donde podrás repasar las tarjetas con controles para:
+     - ✅ Mostrar respuesta
+     - ⏭️ Pasar a la siguiente
+     - ✅ Marcar como acierto
+     - ❌ Marcar como fallo
+   - Verás un resumen del progreso (aciertos, fallos y porcentaje) al final de la sesión.
 
-Este flujo está diseñado para que puedas estudiar de forma rápida y sin distracciones, directamente desde tus notas en Obsidian.
+Este flujo está diseñado para que puedas estudiar de forma rápida, visualmente clara y sin distracciones.
 
 ---
 

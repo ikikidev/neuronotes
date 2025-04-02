@@ -171,3 +171,80 @@
   width: 100% !important;
   max-width: 100% !important;
 }
+
+.card-modal .actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-modal .actions button {
+  background-color: #d9f99d;
+  color: #3f6212;
+}
+
+.card-modal .actions button:last-child {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.card-modal .stats {
+  font-size: 1rem;
+  color: #4c1d95;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Centrar contadores */
+.card-modal .stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b21a8;
+}
+
+/* Agrupar todos los botones */
+.card-modal .controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Estilo base de todos los botones */
+.card-modal .controls button {
+  padding: 0.7rem 1.4rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card-modal .controls button:hover {
+  transform: scale(1.05);
+}
+
+/* Colores personalizados */
+.card-modal .correct {
+  background-color: #d9f99d;
+  color: #365314;
+}
+
+.card-modal .incorrect {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.card-modal .show-answer,
+.card-modal .next {
+  background-color: #c084fc;
+  color: white;
+}
