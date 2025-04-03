@@ -248,3 +248,33 @@
   background-color: #c084fc;
   color: white;
 }
+
+.done-message {
+  font-size: 1.4em;
+  color: #FF8FAB;
+  text-align: center;
+  font-weight: bold;
+  animation: popIn 0.6s ease;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.celebrate-again {
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border: none;
+  border-radius: 12px;
+  background-color: #ffe0f0;
+  color: #b00060;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.celebrate-again:hover {
+  transform: scale(1.05);
+}
+
