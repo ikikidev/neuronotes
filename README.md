@@ -1,5 +1,15 @@
 # Neuronotes 🧠💡
 
+![Estado](https://img.shields.io/badge/Estado-%20Estable-brightgreen)
+![Docs](https://img.shields.io/badge/Documentación-Completa-green)
+![Licencia](https://img.shields.io/badge/Licencia-GPL--3\.0-CAFFBF)
+![Versión](https://img.shields.io/badge/Versión-v1\.2\.0-9BF6FF)
+![Asistencia](https://img.shields.io/badge/Asistencia-Activa-A0C4FF)
+![Construido con TypeScript](https://img.shields.io/badge/construido%20con-TypeScript-C1D3FE?logo=typescript&logoColor=white)
+![Obsidian](https://img.shields.io/badge/Obsidian-Plugin-BDB2FF)
+![Cute](https://img.shields.io/badge/🦄%20CyberCute-Approved-FFC6FF)
+![Desarrollado](https://img.shields.io/badge/Desarrollado-@ikikidev-ffc0cb)
+
 **Neuronotes** es un complemento para [Obsidian](https://obsidian.md) que permite estudiar con flashcards directamente desde tus notas. Está diseñado con especial atención a personas con TDAH: simple, directo y sin sobrecarga visual.  
 Y lo mejor: al final de cada repaso te espera una celebración, porque cada paso cuenta y merece ser reconocido. 🎉
 
