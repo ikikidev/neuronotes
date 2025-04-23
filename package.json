@@ -1,0 +1,18 @@
+{
+  "name": "neuronotes",
+  "version": "1.0.0",
+  "description": "Complemento para Obsidian con flashcards TDAH-friendly",
+  "main": "main.js",
+  "scripts": {
+    "build": "esbuild main.ts --bundle --platform=node --target=es2020 --outfile=main.js --external:obsidian"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.2",
+    "obsidian": "^1.8.7",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "tsparticles-engine": "^2.12.0",
+    "tsparticles-preset-confetti": "^2.12.0"
+  }
+}
