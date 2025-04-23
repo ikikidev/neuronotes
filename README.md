@@ -15,7 +15,7 @@ Y lo mejor: al final de cada repaso te espera una celebración, porque cada paso
 ![Construido con TypeScript](https://img.shields.io/badge/construido%20con-TypeScript-5829A7?logo=typescript&logoColor=white)
 ![Obsidian](https://img.shields.io/badge/Obsidian-Plugin-4E148C)
 ![Cute](https://img.shields.io/badge/🦄%20CyberCute-Approved-3D0E61)
-![Desarrollado](https://img.shields.io/badge/Desarrollado-@ikikidev-2C0735))
+![Desarrollado](https://img.shields.io/badge/Desarrollado-@ikikidev-2C0735)
 
 ---
 
