@@ -1,0 +1,18 @@
+# Dependencias
+node_modules/
+
+# Archivos de construcción
+main.js
+main.js.map
+
+# Archivos temporales / del entorno
+.DS_Store
+.env
+*.log
+
+# Salidas de compilación TypeScript (si usas otro outDir)
+dist/
+build/
+
+# Archivos de lock si no quieres subirlos (opcional)
+package-lock.json
