@@ -3,10 +3,8 @@
   "name": "Neuronotes",
   "version": "1.0.0",
   "minAppVersion": "1.0.0",
-  "description": "Minimal flashcard plugin designed for ADHD-friendly workflows",
+  "description": "Minimal flashcard system designed for ADHD-friendly workflows",
   "author": "ikikidev",
-  "authorUrl": "https://www.linkedin.com/in/victoria-n-9b8423180/",
-  "main": "main.js",
-  "css": "styles.css",
+  "authorUrl": "https://www.linkedin.com/in/victoria-n-9b8423180/",  
   "isDesktopOnly": false
 }
