@@ -2,6 +2,7 @@
 import { Plugin, Modal, Notice, TFile, App } from "obsidian";
 import { loadConfettiPreset } from "tsparticles-preset-confetti";
 import { tsParticles } from "tsparticles-engine";
+import "./styles.css";
 
 interface Flashcard {
   q: string;
@@ -13,8 +14,8 @@ export default class NeuronotesPlugin extends Plugin {
     console.log("🧠 Neuronotes ha sido activado");
     await loadConfettiPreset(tsParticles);
     this.addCommand({
-      id: "neuronotes-scan-note",
-      name: "Revisar flashcards (Neuronotes)",
+      id: "scan-note",
+      name: "Revisar flashcards",
       callback: () => this.scanCurrentNote(),
     });
   }
@@ -142,6 +143,10 @@ class FlashcardModal extends Modal {
     this.flashcards = flashcards;
   }
 
+  getNeuronotesPlugin(app: App): NeuronotesPlugin | null {
+    return (app as any).plugins.getPlugin("neuronotes") as NeuronotesPlugin;
+  }
+
   onOpen() {
     this.modalEl.classList.add("wide-modal");
     this.showCard();
@@ -163,9 +168,7 @@ class FlashcardModal extends Modal {
     if (this.current >= this.flashcards.length) {
       const done = contentEl.createDiv({ cls: "card-modal" });
       done.createEl("div", { text: "🎉", cls: "celebration" });
-      const plugin = (this.app as any).plugins.getPlugin(
-        "neuronotes"
-      ) as NeuronotesPlugin;
+      const plugin = this.getNeuronotesPlugin(this.app);
       if (plugin?.launchConfetti) {
         plugin.launchConfetti(done);
       }
@@ -187,9 +190,7 @@ class FlashcardModal extends Modal {
       });
 
       celebrateBtn.onclick = () => {
-        const plugin = (this.app as any).plugins.getPlugin(
-          "neuronotes"
-        ) as NeuronotesPlugin;
+        const plugin = this.getNeuronotesPlugin(this.app);
         if (plugin?.launchConfetti) {
           plugin.launchConfetti(done);
         }
