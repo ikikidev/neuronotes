@@ -89,13 +89,7 @@ export default class NeuronotesPlugin extends Plugin {
 
     const confettiEl = document.createElement("div");
     confettiEl.id = "confetti-container";
-    confettiEl.style.position = "fixed";
-    confettiEl.style.top = "0";
-    confettiEl.style.left = "0";
-    confettiEl.style.width = "100%";
-    confettiEl.style.height = "100%";
-    confettiEl.style.pointerEvents = "none";
-    confettiEl.style.zIndex = "9999";
+    confettiEl.classList.add("confetti-container");
     container.appendChild(confettiEl);
 
     // Paletas ciber cute aleatorias
