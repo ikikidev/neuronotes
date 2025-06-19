@@ -131,7 +131,11 @@ class FlashcardModal extends Modal {
 
   private statsEl!: HTMLDivElement;
 
-  constructor(app: App, flashcards: Flashcard[], private plugin: NeuronotesPlugin) {
+  constructor(
+    app: App,
+    flashcards: Flashcard[],
+    private plugin: NeuronotesPlugin
+  ) {
     super(app);
     this.flashcards = flashcards;
   }
@@ -158,7 +162,6 @@ class FlashcardModal extends Modal {
       const done = contentEl.createDiv({ cls: "card-modal" });
       done.createEl("div", { text: "🎉", cls: "celebration" });
       this.plugin.launchConfetti(done);
-
 
       done.createEl("div", {
         text: "¡Has terminado el repaso!",
@@ -207,43 +210,7 @@ class FlashcardModal extends Modal {
 
     // Crear contenedor de la pregunta
     const question = container.createDiv({ cls: "question" });
-
-    // Procesar pregunta y opciones si es tipo test
-    if (isMultipleChoice) {
-      let lines: string[] = [];
-
-      if (card.q.includes("\n")) {
-        lines = card.q.split("\n");
-      } else {
-        const matches = card.q.match(/[^A-D]*|[A-D]\..*?(?=\s[A-D]\.|$)/gs);
-        if (matches) lines = matches.map((line) => line.trim());
-      }
-
-      // Si no se ha podido dividir correctamente, usar el formato plano
-      if (!lines || lines.length < 2) {
-        question.textContent = card.q;
-        return;
-      }
-
-      // Crear pregunta principal
-      const questionText = document.createElement("div");
-      questionText.textContent = lines[0];
-      questionText.classList.add("question-title");
-      question.appendChild(questionText);
-
-      // Crear las opciones
-      for (let i = 1; i < lines.length; i++) {
-        const option = document.createElement("div");
-        option.textContent = lines[i];
-        option.classList.add("option-line");
-        question.appendChild(option);
-      }
-    } else {
-      const questionText = document.createElement("div");
-      questionText.textContent = card.q;
-      questionText.classList.add("question-title");
-      question.appendChild(questionText);
-    }
+    question.innerHTML = this.parseCardContent(card.q);
 
     // Crear contenedor de la respuesta, inicialmente oculta
     const answer = container.createEl("div", {
@@ -288,6 +255,48 @@ class FlashcardModal extends Modal {
       this.updateStats();
       nextBtn.click();
     };
+  }
+
+  parseCardContent(text: string): string {
+    const questionRegex = /¿.*?\?/;
+    let output = "";
+
+    const questionMatch = text.match(questionRegex);
+    if (!questionMatch) return `<p>${text}</p>`;
+
+    output += `<div class="question-title">${questionMatch[0]}</div>`;
+    const rest = text.replace(questionRegex, "").trim();
+
+    // Detectar opciones, aunque estén en líneas separadas
+    const optionLines = rest
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    let currentOption = "";
+    let finalOptions: string[] = [];
+
+    for (const line of optionLines) {
+      const optionStart = line.match(/^([A-D]\))\s?(.*)?$/);
+      if (optionStart) {
+        // Si ya teníamos una opción anterior, la guardamos
+        if (currentOption) finalOptions.push(currentOption);
+
+        // Empezamos nueva opción
+        currentOption = `<div class="option-line">${optionStart[1]} ${
+          optionStart[2] || ""
+        }`.trim();
+      } else {
+        // Es continuación de una opción anterior
+        currentOption += ` ${line}`;
+      }
+    }
+
+    if (currentOption) finalOptions.push(currentOption + "</div>");
+    else finalOptions = finalOptions.map((opt) => opt + "</div>");
+
+    output += finalOptions.join("");
+    return output;
   }
 
   onClose() {

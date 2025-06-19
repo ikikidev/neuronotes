@@ -37,13 +37,15 @@
 
 /* Opciones tipo test */
 .card-modal.test-card .option-line {
+  display: block !important;            /* forzar que cada opción ocupe su propia línea */
+  margin: 0.5rem 0 0.75rem !important;  /* espacio arriba y abajo */
+  padding-left: 1rem !important;        /* sangría, antes usabas margin-left */
   font-size: clamp(1rem, 2vw, 1.3rem);
   font-weight: normal;
-  text-align: left;
-  margin-left: 1rem;
   color: #c4b5fd;
   line-height: 1.6;
 }
+
 
 /* Respuesta */
 .card-modal .answer {
@@ -286,4 +288,20 @@
   height: 100%;
   pointer-events: none;
   z-index: 9999;
+}
+
+.option-line{
+    display: block !important;            /* forzar que cada opción ocupe su propia línea */
+    margin: 0.5rem 0 0.75rem !important;  /* espacio arriba y abajo */
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: normal;
+    color: #c4b5fd;
+    line-height: 1.6;
+    text-align: left !important;
+}
+
+.card-modal .question {
+  max-width: 640px;
+  margin: auto;
+  text-align: left;
 }
