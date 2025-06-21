@@ -1,4 +1,4 @@
-// Archivo: main.ts (con contador y final feliz CyberCute)
+// Archivo: main.ts (Neuronotes optimizado sin estilos inline)
 import { Plugin, Modal, Notice, TFile, App } from "obsidian";
 import { loadConfettiPreset } from "tsparticles-preset-confetti";
 import { tsParticles } from "tsparticles-engine";
@@ -12,11 +12,22 @@ export default class NeuronotesPlugin extends Plugin {
   async onload() {
     console.log("🧠 Neuronotes ha sido activado");
     await loadConfettiPreset(tsParticles);
+
     this.addCommand({
       id: "scan-note",
       name: "Revisar flashcards",
       callback: () => this.scanCurrentNote(),
     });
+
+    this.injectStyles();
+  }
+
+  injectStyles() {
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.type = "text/css";
+    style.href = this.app.vault.adapter.getResourcePath(this.manifest.dir + "/styles.css");
+    document.head.appendChild(style);
   }
 
   onunload() {
@@ -53,22 +64,13 @@ export default class NeuronotesPlugin extends Plugin {
         const a = aMatch?.[1]?.trim();
 
         if (qRaw && a) {
-          // Determinar si es tipo test (varias líneas con A., B., etc..
-          const isMultipleChoice =
-            /\bA\.\b|\bB\.\b|\bC\.\b|\bD\.\b/.test(qRaw) && qRaw.includes("\n");
-
+          const isMultipleChoice = /\bA\.\b|\bB\.\b|\bC\.\b|\bD\.\b/.test(qRaw) && qRaw.includes("\n");
           let qFormatted = qRaw;
 
           if (isMultipleChoice) {
-            // Dividir líneas de la pregunta y opciones
             const lines = qRaw.split(/\r?\n/);
             const questionLine = lines[0];
-            const options = lines
-              .slice(1)
-              .map((line) => line.trim())
-              .filter(Boolean);
-
-            // Recomponer con formato tipo test visual
+            const options = lines.slice(1).map((line) => line.trim()).filter(Boolean);
             qFormatted = questionLine + "\n" + options.join("\n");
           }
 
@@ -80,7 +82,6 @@ export default class NeuronotesPlugin extends Plugin {
   }
 
   launchConfetti(container: HTMLElement) {
-    // Limpiar confetti anterior si existe
     const existing = document.getElementById("confetti-container");
     if (existing) {
       tsParticles.dom().forEach((instance) => instance.destroy());
@@ -92,15 +93,12 @@ export default class NeuronotesPlugin extends Plugin {
     confettiEl.classList.add("confetti-container");
     container.appendChild(confettiEl);
 
-    // Paletas ciber cute aleatorias
     const palettes = [
-      ["#FFD1DC", "#A0E7E5", "#B4F8C8", "#FFB5E8", "#FBE7C6"], // pastel
-      ["#FF9CEE", "#B28DFF", "#AFF8DB", "#FFFFD1", "#FFA8A8"], // cybercute neón pastel
-      ["#F6A6FF", "#A6E1FA", "#FCE38A", "#EAFFD0", "#C7CEEA"], // arcoíris suave
+      ["#FFD1DC", "#A0E7E5", "#B4F8C8", "#FFB5E8", "#FBE7C6"],
+      ["#FF9CEE", "#B28DFF", "#AFF8DB", "#FFFFD1", "#FFA8A8"],
+      ["#F6A6FF", "#A6E1FA", "#FCE38A", "#EAFFD0", "#C7CEEA"],
     ];
     const randomPalette = palettes[Math.floor(Math.random() * palettes.length)];
-
-    // Variar parámetros visuales
     const angles = [90, 120, 270, 360];
     const gravities = [1, 2, 0.8];
     const spread = [60, 90, 120, 180];
@@ -109,9 +107,7 @@ export default class NeuronotesPlugin extends Plugin {
     tsParticles.load("confetti-container", {
       preset: "confetti",
       background: { color: "transparent" },
-      particles: {
-        color: { value: randomPalette },
-      },
+      particles: { color: { value: randomPalette } },
       confetti: {
         angle: angles[Math.floor(Math.random() * angles.length)],
         gravity: gravities[Math.floor(Math.random() * gravities.length)],
@@ -121,7 +117,6 @@ export default class NeuronotesPlugin extends Plugin {
     });
   }
 }
-
 class FlashcardModal extends Modal {
   private flashcards: Flashcard[];
   private current = 0;
@@ -131,11 +126,7 @@ class FlashcardModal extends Modal {
 
   private statsEl!: HTMLDivElement;
 
-  constructor(
-    app: App,
-    flashcards: Flashcard[],
-    private plugin: NeuronotesPlugin
-  ) {
+  constructor(app: App, flashcards: Flashcard[], private plugin: NeuronotesPlugin) {
     super(app);
     this.flashcards = flashcards;
   }
@@ -148,16 +139,13 @@ class FlashcardModal extends Modal {
   updateStats() {
     const total = this.correctCount + this.incorrectCount;
     const pct = total > 0 ? Math.round((this.correctCount / total) * 100) : 0;
-    this.statsEl.setText(
-      `✅ ${this.correctCount} ❌ ${this.incorrectCount}  (${pct}%)`
-    );
+    this.statsEl.setText(`✅ ${this.correctCount} ❌ ${this.incorrectCount}  (${pct}%)`);
   }
 
   showCard() {
     const { contentEl } = this;
     contentEl.empty();
 
-    // Si se han repasado todas las tarjetas, mostrar mensaje final
     if (this.current >= this.flashcards.length) {
       const done = contentEl.createDiv({ cls: "card-modal" });
       done.createEl("div", { text: "🎉", cls: "celebration" });
@@ -167,6 +155,7 @@ class FlashcardModal extends Modal {
         text: "¡Has terminado el repaso!",
         cls: "done-message",
       });
+
       const total = this.correctCount + this.incorrectCount;
       const pct = total > 0 ? Math.round((this.correctCount / total) * 100) : 0;
       done.createEl("div", {
@@ -187,39 +176,27 @@ class FlashcardModal extends Modal {
       return;
     }
 
-    // Obtener la tarjeta actual
     const card = this.flashcards[this.current];
-
-    // Detectar si es tipo test (A., B., C., D.) para aplicar estilo
-
     const isMultipleChoice = /A\..*?B\..*?C\..*?D\./s.test(card.q);
-
-    const cardTypeClass = isMultipleChoice
-      ? "card-modal test-card"
-      : "card-modal";
+    const cardTypeClass = isMultipleChoice ? "card-modal test-card" : "card-modal";
     const container = contentEl.createDiv({ cls: cardTypeClass });
 
-    // Mostrar el contador de progreso
     container.createEl("div", {
       text: `Tarjeta ${this.current + 1} de ${this.flashcards.length}`,
       cls: "counter",
     });
 
     this.statsEl = container.createDiv({ cls: "stats" });
-    this.updateStats(); // nueva función que vas a añadir ahora
+    this.updateStats();
 
-    // Crear contenedor de la pregunta
     const question = container.createDiv({ cls: "question" });
     question.innerHTML = this.parseCardContent(card.q);
 
-    // Crear contenedor de la respuesta, inicialmente oculta
     const answer = container.createEl("div", {
       text: card.a,
-      cls: "answer",
+      cls: "answer hidden",
     });
-    answer.style.display = "none";
 
-    // Crear botones
     const showBtn = container.createEl("button", { text: "Mostrar respuesta" });
     const nextBtn = container.createEl("button", { text: "Siguiente" });
     const correctBtn = container.createEl("button", { text: "✅ Acierto" });
@@ -234,8 +211,8 @@ class FlashcardModal extends Modal {
     incorrectBtn.classList.add("incorrect");
 
     showBtn.onclick = () => {
-      answer.style.display = "block";
-      showBtn.style.display = "none";
+      answer.classList.remove("hidden");
+      showBtn.classList.add("hidden");
     };
 
     nextBtn.onclick = () => {
@@ -267,11 +244,7 @@ class FlashcardModal extends Modal {
     output += `<div class="question-title">${questionMatch[0]}</div>`;
     const rest = text.replace(questionRegex, "").trim();
 
-    // Detectar opciones, aunque estén en líneas separadas
-    const optionLines = rest
-      .split(/\r?\n/)
-      .map((line) => line.trim())
-      .filter(Boolean);
+    const optionLines = rest.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
 
     let currentOption = "";
     let finalOptions: string[] = [];
@@ -279,15 +252,9 @@ class FlashcardModal extends Modal {
     for (const line of optionLines) {
       const optionStart = line.match(/^([A-D]\))\s?(.*)?$/);
       if (optionStart) {
-        // Si ya teníamos una opción anterior, la guardamos
         if (currentOption) finalOptions.push(currentOption);
-
-        // Empezamos nueva opción
-        currentOption = `<div class="option-line">${optionStart[1]} ${
-          optionStart[2] || ""
-        }`.trim();
+        currentOption = `<div class="option-line">${optionStart[1]} ${optionStart[2] || ""}`.trim();
       } else {
-        // Es continuación de una opción anterior
         currentOption += ` ${line}`;
       }
     }

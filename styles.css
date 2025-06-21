@@ -14,7 +14,6 @@
   word-break: break-word;
 }
 
-/* Contador de tarjetas */
 .card-modal .counter {
   font-size: 0.95rem;
   color: #a78bfa;
@@ -26,7 +25,6 @@
   margin-bottom: 1.25rem;
 }
 
-/* Pregunta principal */
 .card-modal .question-title {
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   font-weight: 700;
@@ -35,19 +33,16 @@
   text-align: center;
 }
 
-/* Opciones tipo test */
 .card-modal.test-card .option-line {
-  display: block !important;            /* forzar que cada opción ocupe su propia línea */
-  margin: 0.5rem 0 0.75rem !important;  /* espacio arriba y abajo */
-  padding-left: 1rem !important;        /* sangría, antes usabas margin-left */
+  display: block !important;
+  margin: 0.5rem 0 0.75rem !important;
+  padding-left: 1rem !important;
   font-size: clamp(1rem, 2vw, 1.3rem);
   font-weight: normal;
   color: #c4b5fd;
   line-height: 1.6;
 }
 
-
-/* Respuesta */
 .card-modal .answer {
   font-size: clamp(1rem, 2vw, 1.2rem);
   color: #3f3f46;
@@ -60,7 +55,6 @@
   box-shadow: inset 0 0 0 1px #e9d5ff;
 }
 
-/* Botones */
 .card-modal button {
   background-color: #c084fc;
   border: none;
@@ -81,7 +75,6 @@
   transform: scale(1.06);
 }
 
-/* Celebración final */
 .card-modal .celebration {
   font-size: 2.2rem;
   margin-bottom: 1rem;
@@ -95,7 +88,6 @@
   margin-top: 1rem;
 }
 
-/* Animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -108,12 +100,11 @@
 }
 
 @keyframes bounce {
-  0%   { transform: scale(0.8); }
-  50%  { transform: scale(1.1); }
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
 
-/* Modo oscuro */
 .theme-dark .card-modal {
   background-color: #2a2438;
   border-color: #4c1d95;
@@ -146,7 +137,6 @@
   color: #d8b4fe;
 }
 
-/* Responsive: pantallas pequeñas */
 @media (max-width: 480px) {
   .card-modal {
     width: 95vw;
@@ -192,14 +182,6 @@
 }
 
 .card-modal .stats {
-  font-size: 1rem;
-  color: #4c1d95;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-/* Centrar contadores */
-.card-modal .stats {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
@@ -209,7 +191,6 @@
   color: #6b21a8;
 }
 
-/* Agrupar todos los botones */
 .card-modal .controls {
   display: flex;
   flex-wrap: wrap;
@@ -218,7 +199,6 @@
   margin-top: 2rem;
 }
 
-/* Estilo base de todos los botones */
 .card-modal .controls button {
   padding: 0.7rem 1.4rem;
   border-radius: 9999px;
@@ -234,7 +214,6 @@
   transform: scale(1.05);
 }
 
-/* Colores personalizados */
 .card-modal .correct {
   background-color: #d9f99d;
   color: #365314;
@@ -290,18 +269,22 @@
   z-index: 9999;
 }
 
-.option-line{
-    display: block !important;            /* forzar que cada opción ocupe su propia línea */
-    margin: 0.5rem 0 0.75rem !important;  /* espacio arriba y abajo */
-    font-size: clamp(1rem, 2vw, 1.3rem);
-    font-weight: normal;
-    color: #c4b5fd;
-    line-height: 1.6;
-    text-align: left !important;
+.option-line {
+  display: block !important;
+  margin: 0.5rem 0 0.75rem !important;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: normal;
+  color: #c4b5fd;
+  line-height: 1.6;
+  text-align: left !important;
 }
 
 .card-modal .question {
   max-width: 640px;
   margin: auto;
   text-align: left;
+}
+
+.hidden {
+  display: none !important;
 }
